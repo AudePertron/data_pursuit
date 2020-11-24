@@ -9,7 +9,6 @@ def traitement_reponse(reponse_joueur, reponse_origine, commentaire, difficulte,
         statut = True
         if difficulte = 3 : #si question camembert
             fonction_camembert(joueur, theme)    #appeler la fonction de gestion des camemberts. 
-            statut = True
     else: 
         statut = False
 
