@@ -16,7 +16,7 @@ def traitement_reponse(reponse_joueur, reponse_origine, commentaire, difficulte,
     return statut #booleen True or False pour continuer le tour ou passer au suivant
 
 
-def fonction_camembert(joueur, theme):        #joueur serait une classe?
+def fonction_camembert(joueur, theme):        
     joueur.camembert.append = theme   #valider le camembert de la couleur sélectionnée
     if len(joueur.camembert >=5):
         question_finale()   #si les cinq thèmes sont validés, passer à la question finale
