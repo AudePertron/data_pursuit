@@ -14,11 +14,11 @@ class Bdd:
     	cls.data.close()
 
     @classmethod
-    def obtenir_question(cls, theme, diffic):
-		cls.curs.execute(f"SELECT id_question, libelle_question FROM questions WHERE theme_question = {theme} AND difficulte_question = {diffic}")
+    def obtenir_question(cls, theme):
+		cls.curs.execute(f"SELECT id_question, libelle_question, difficulte_question FROM questions WHERE theme_question = {theme}")
 		result = cls.curs.fetchall()
 		cls.fermer_connexion()
-		return result # on obtient une liste de tuples [(id1, libelle1), (id2, libelle2), ...]
+		return result # on obtient une liste de tuples [(id1, libelle1, diffic1), (id2, libelle2, diffic2), ...]
 
 	@classmethod
     def obtenir_reponse_id(cls, id):
