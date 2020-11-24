@@ -1,11 +1,12 @@
 from joueur import Joueur
 
-def traitement_reponse(reponse_joueur, reponse_origine, commentaire, difficulte, joueur, theme ):    #classe/dictionnaire joueur en input
+def traitement_reponse(reponse_joueur, id_question, joueur, theme ):    #classe/dictionnaire joueur en input
     if reponse_joueur == reponse_origine: #si bonne réponse
         #changer par une interface
+        #utiliser query Ludivine pour choper la réponse et difficulté
         print("Réponse correcte")
         print(reponse_origine)
-        print(commentaire)
+        
         statut = True
         if difficulte = 3 : #si question camembert
             fonction_camembert(joueur, theme)    #appeler la fonction de gestion des camemberts. 
