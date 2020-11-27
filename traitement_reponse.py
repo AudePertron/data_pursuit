@@ -1,6 +1,8 @@
 from joueur import Joueur
+from coonect_bdd import Bdd
 
 def traitement_reponse(reponse_joueur, id_question, joueur, theme ):    #classe/dictionnaire joueur en input
+    reponse_origine = Bdd.obtenir_reponse_id(id_question)
     if reponse_joueur == reponse_origine: #si bonne réponse
         #changer par une interface
         #utiliser query Ludivine pour choper la réponse et difficulté
