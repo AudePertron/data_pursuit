@@ -7,6 +7,7 @@ class Bdd:
             password='root', host='localhost', 
             database='data_pursuit', port='8081')
         self.curs = self.data.cursor()
+	self.curs.execute("SELECT id_theme FROM theme")
 
     @classmethod
     def fermer_connexion(cls):
