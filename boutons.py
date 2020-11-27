@@ -28,14 +28,22 @@ class Interface:
         self.frame_menu = tk.Frame(self.master, bg=colors['noir'])
         self.frame_menu.pack()
 
-        #fonction d'ajout de bouton
-        p_joueur = tk.Entry(self.frame_boutons, width=30).grid(row=1, column=1)
+        #récupération de l'input nombre de joueurs
+        p_joueur = tk.Entry(self.frame_boutons, width=30)
+        p_joueur.grid(row=1, column=1)
+        p_joueur.insert(0, 'nombre de joueurs')
 
-        def nb_j():
+        def nb_j():     #fonction du nb de joueurs
             nb_joueurs = p_joueur.get()
+            print(nb_joueurs)
             return nb_joueurs
 
-        tk.Button(master, text='Valider', command = nb_joueurs).grid(row=1, column=2)
+        #bouton valider
+        valide = tk.Button(self.frame_boutons, text='Valider', command = nb_j)
+        valide.grid(row=1, column=2)
+
+        
+
 
 def main():
     window = tk.Tk()
@@ -43,6 +51,7 @@ def main():
     window.mainloop()
 
 main()
+
         # for i, (key, value) in enumerate(fonctions.items()):
         #     ligne = tk.Button(self.frame_boutons, height=2, width=12, bg=colors['orange'], bd=0, font=(
         #         'Helvetica', '12'), text=key, command=value)
