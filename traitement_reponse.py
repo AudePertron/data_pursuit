@@ -19,7 +19,7 @@ def traitement_reponse(reponse_joueur, id_question, joueur, theme, difficulte ):
 
 
 def fonction_camembert(joueur, theme):        
-    joueur.camembert.pop = theme   #valider le camembert de la couleur sélectionnée
+    joueur.camembert.pop(theme)   #valider le camembert de la couleur sélectionnée
     if len(joueur.camembert < 1):
         question_finale()   #si les cinq thèmes sont validés, passer à la question finale
     return joueur
