@@ -7,8 +7,8 @@ class Bdd:
             password='root', host='localhost', 
             database='data_pursuit', port='8081')
         self.curs = self.data.cursor()
-	self.theme = self.curs.execute("SELECT id_theme FROM theme")
-	return self.theme
+	self.id_theme = self.curs.execute("SELECT id_theme FROM theme")
+	return self.id_theme
 	
 
     @classmethod
