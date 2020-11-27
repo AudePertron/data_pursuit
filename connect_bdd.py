@@ -23,7 +23,7 @@ class Bdd:
 		cls.fermer_connexion()
 		return result # on obtient une liste de tuples [(id1, libelle1, diffic1), (id2, libelle2, diffic2), ...] de questions potentielles
 
-    @classmethod
+	@classmethod
 	def obtenir_lib_dif_question(cls, id): # on renseigne l'id (choisi au hasard parmis les id correspondant au thème)
 		cls.curs.execute(f"SELECT id_question, libelle_question, difficulte_question FROM questions WHERE id_question = {id}")
 		result = cls.curs.fetchall()
