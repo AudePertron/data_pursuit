@@ -19,7 +19,7 @@ def question_aleatoire(lister_themes,lister_questions_theme):
        for key, value in  liste_question:    
         liste_question_finale.setdefault(key,[]).append(value)
 '''
-       #recupération des id des questions du theme choisis
+       #recupération des id des questions déjà posées du theme choisis
        stock_id_question.append(id_question in question_aleatoire)
        #suppression des id_question dejà sélectionnées dans liste_question
        if id_question in (stock_id_question) and id_question in (liste_question):
