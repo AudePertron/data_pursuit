@@ -1,13 +1,12 @@
 from joueur import Joueur
 from connect_bdd import Bdd
 
-def traitement_reponse(reponse_joueur, id_question, joueur, theme ):    #classe/dictionnaire joueur en input
+def traitement_reponse(reponse_joueur, id_question, joueur, theme, difficulte ):    #traitement de la réponse du joueur
 
-    reponse_origine, difficulte = Bdd.obtenir_lib_dif_question(id_question) #query qui récupère réponse et difficulté
+    reponse_origine= Bdd.obtenir_reponse_id(id_question) #query qui récupère la bonne réponse 
 
     if reponse_joueur == reponse_origine: #si bonne réponse
         #changer par une interface
-        #utiliser query Ludivine pour choper la réponse et difficulté
         print("Réponse correcte")
         print(reponse_origine)
         statut = True       #joueur.tour --> continue à jouer
@@ -25,4 +24,6 @@ def fonction_camembert(joueur, theme):
         question_finale()   #si les cinq thèmes sont validés, passer à la question finale
     return joueur
 
-def question_finale(joueur, theme)
+def question_finale(joueur):
+    theme = get_theme_joueur     #récupérer l'input des autres joueurs
+    return theme  #puis repart en jeu "normal"
