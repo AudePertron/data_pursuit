@@ -1,2 +1,2 @@
 ### Modèle logique des données
-![mld](images/mld.PNG)
+![mld](images/mld.png)
