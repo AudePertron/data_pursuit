@@ -2,7 +2,7 @@ def question_aleatoire(lister_themes,lister_questions_theme):
        
        liste_question = []
        question_aleatoire = []
-       stock_id_questionid_question = []
+       stock_id_question = []
        '''
        liste_question_finale = {}
        '''
