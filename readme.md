@@ -9,3 +9,7 @@ Le résultat final sera époustouflant!
 ### Burndown du lundi 30 Novembre
 
 ![burndown](images/burndown.jpg)
+
+### Projet d'interface graphique 30 novembre
+
+![UI](images/etude_interface.png)
