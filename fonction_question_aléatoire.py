@@ -1,19 +1,31 @@
 from connect_bdd import Bdd
 import random
 
-def question_aleatoire(stock):
+def question_aleatoire(stock, theme, difficulte):
     data = Bdd()
     aleatoire_question = []
     stock_id_question = stock
     #choix aléatoire et affichage des deux thèmes,puis l'utilisateur doit faire un choix
-    themes = Bdd.lister_themes()
-    themes_au_choix = random.sample(themes,2)
-    print(themes_au_choix)
-    theme_choisi = input(" ++++++  Veuillez choisir un theme: ")
-   
+
+    #boucle qui permet de décider manuellement ou automatiquement du thème
+    if theme == 0:
+        themes = Bdd.lister_themes()
+        themes_au_choix = random.sample(themes,2)
+        print(themes_au_choix)
+        theme_choisi = input(" ++++++  Veuillez choisir un theme: ")
+    else:
+        theme_choisi = theme
+
+    #boucle qui permet de sélectionner manuellement ou automatiquement la difficulté
+
+    if difficulte ==0:
+        liste_question = data.lister_questions_theme(theme_choisi[0])
+    else:
+        print("theme choisi 0.0 " + str(theme_choisi[0][0]))
+        liste_question = data.lister_questions_dures(str(theme_choisi[0][0]), difficulte)
+
+
     #stockage de tous les id, des libellés et des difficultés des questions du theme sélectionné par le joueur 
-       
-    liste_question = data.lister_questions_theme(theme_choisi)
 
     #choix aléatoire de la question
 

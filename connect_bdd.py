@@ -34,6 +34,14 @@ class Bdd:
 		return result # on obtient une liste de tuples [(id1, libelle1, diffic1), (id2, libelle2, diffic2), ...] de questions potentielles
 
 	@classmethod
+	def lister_questions_dures(cls, theme, difficulte):
+		cls.ouvrir_connexion()
+		cls.curs.execute(f"SELECT id_question, libelle_question, difficulte_question FROM questions WHERE theme_question = {theme} AND difficulte_question = {difficulte}")
+		result = cls.curs.fetchall()
+		cls.fermer_connexion()
+		return result # on obtient une liste de tuples [(id1, libelle1, diffic1), (id2, libelle2, diffic2), ...] de questions potentielles
+
+	@classmethod
 	def obtenir_lib_dif_question(cls, id): # on renseigne l'id (choisi au hasard parmis les id correspondant au thème)
 		cls.ouvrir_connexion()
 		cls.curs.execute(f"SELECT libelle_question, difficulte_question FROM questions WHERE id_question = {id}")

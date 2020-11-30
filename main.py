@@ -33,17 +33,24 @@ def main():
 	dico_joueurs[3] = joueur3
 	dico_joueurs[4] = joueur4
 	
-
+	
 	idj_actuel = 1
 	stockage = []
-
+	(dico_joueurs[idj_actuel]).camembert = ['3']
+	
 #vrai main ?
 	statut = True
 	while statut :
 		print(" ++++++++++++++++++++++")
 		print(" ++++++  tour en cours :", dico_joueurs[idj_actuel])
 		print("camemberts de base du joueur: " + str((dico_joueurs[idj_actuel]).camembert))
-		a = question_aleatoire(stockage) #	return aleatoire_question[0], stock_id_question, theme_choisi
+		
+		if (dico_joueurs[idj_actuel]).final == 0:
+			a = question_aleatoire(stockage,0,0) #	return aleatoire_question[0], stock_id_question, theme_choisi #le zéro sert à laisser le thème en aléatoire
+		else:
+			a = question_finale(stockage, 0, '3')
+		print("test question" +str(a))
+
 		id_question = a[0][0]
 		libelle = a[0][1]
 		difficulte = a[0][2]
@@ -56,7 +63,7 @@ def main():
 
 		b = input(" ++++++  Votre réponse :")
 
-		statut, joueur = traitement_reponse(b, id_question, dico_joueurs[idj_actuel], theme, '3')
+		statut, joueur = traitement_reponse(b, id_question, dico_joueurs[idj_actuel], theme, '3', stockage)
 
 	idj_actuel = j_suivant(dico_joueurs, idj_actuel)
 	print(" ++++++++++++++++++++++")
