@@ -15,46 +15,7 @@ def j_suivant(dico_joueurs, idj_actuel):
 	return idj_actuel
 
 ############### Luigi
-
-def question_aleatoire(stock):
-	data = Bdd()
-	# question = []
-	# liste_question = []
-	aleatoire_question = []
-	stock_id_question = stock
-
-    #liste_question_finale = {}
-    #choix aléatoire et affichage des deux thèmes,puis l'utilisateur doit faire un choix
-	themes = data.lister_themes()
-
-	themes_au_choix = random.sample(themes,2)
-	print(themes_au_choix)
-	theme_choisi = input(" ++++++  Veuillez choisir un theme: ")
-    #stockage de tous les id, des libellés et des difficultés des questions du theme sélectionné par le joueur 
-
-	liste_question = data.lister_questions_theme(theme_choisi)
-
-
-    #creation d'un dictionnaire 
-
-    #choix aléatoire de la question
-	aleatoire_question = random.sample(liste_question,1)
-	while aleatoire_question[0][0] in stock_id_question : # [(5, 'ksjfle', 3), (6, 'isjape', 3)]
-		aleatoire_question = random.sample(liste_question,1)
-
-    #recupération des id, et du niveau des questions du theme choisis
-    	# stock_id_question.append(id_question in question_aleatoire
-	id_question = aleatoire_question[0][0]
-	stock_id_question.append(id_question)
-    #suppression des id_question dejà sélectionnées dans la liste_question
-		# if id_question in (stock_id_question) and id_question in (liste_question):
-		# 	del liste_question[id_question]
-    #rajout de toutes les questions supprimées si liste_question est vide 
-	if len(liste_question) == 0:
-		# 	liste_question = liste_question + stock_id_question
-		stock_id_question = []
-
-	return aleatoire_question[0], stock_id_question, theme_choisi
+	# plus rien 
 
 ############### Aude
 
