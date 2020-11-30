@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import tkinter as tk
+import random
 from joueur import Joueur
 from connect_bdd import Bdd
-import random
-
+from traitement_reponse import traitement_reponse
+from traitement_reponse import fonction_camembert	#peut-être pas nécéssaire
+from traitement_reponse import question_finale	#idem
+from fonction_question_aléatoire import question_aleatoire
 ############### Autres fonctions
 
 def j_suivant(dico_joueurs, idj_actuel):
@@ -14,44 +17,6 @@ def j_suivant(dico_joueurs, idj_actuel):
 		idj_actuel +=1
 	return idj_actuel
 
-############### Luigi
-	# plus rien 
-
-############### Aude
-
-def traitement_reponse(reponse_joueur, id_question, joueur, theme, difficulte ):    #traitement de la réponse du joueur
-
-    data = Bdd()
-    reponse_origine = data.obtenir_reponse_id(id_question) #query qui récupère la bonne réponse 
-    reponse_origine = reponse_origine[0][0]   ##reponse_origine[[0,1]]
-    print("reponse_origine :", reponse_origine)
-
-    if reponse_joueur == reponse_origine: #si bonne réponse
-        #changer par une interface
-        print(" ++++++  Réponse correcte")
-        print(reponse_origine)
-        statut = True       #joueur.tour --> continue à jouer
-        if difficulte == 3 : #si question camembert
-            fonction_camembert(joueur, theme)    #appeler la fonction de gestion des camemberts. 
-    else: 
-    	print(" ++++++  Mauvaise réponse ! \n La bonne réponse était :\n", reponse_origine)
-    	statut = False      #joueur.tour --> tour suivant
-
-    return statut #booleen True or False pour continuer le tour ou passer au suivant
-
-# PAS ENCORE TESTE !! A VALIDER...
-def fonction_camembert(joueur, theme):        
-    joueur.camembert.pop(theme)   #valider le camembert de la couleur sélectionnée
-    if len(joueur.camembert < 1):
-        question_finale()   #si les cinq thèmes sont validés, passer à la question finale
-    return joueur
-
-# PAS ENCORE TESTE !! A VALIDER...
-# def question_finale(joueur):
-#     theme = get_theme_joueur     #récupérer l'input des autres joueurs
-#     return theme  #puis repart en jeu "normal"
-
-############### Main
 
 def main():
 
@@ -67,15 +32,17 @@ def main():
 	dico_joueurs[2] = joueur2
 	dico_joueurs[3] = joueur3
 	dico_joueurs[4] = joueur4
-	print(dico_joueurs)
+	
 
 	idj_actuel = 1
-	stockage = []	
+	stockage = []
 
+#vrai main ?
 	statut = True
 	while statut :
 		print(" ++++++++++++++++++++++")
 		print(" ++++++  tour en cours :", dico_joueurs[idj_actuel])
+		print("camemberts de base du joueur: " + str((dico_joueurs[idj_actuel]).camembert))
 		a = question_aleatoire(stockage) #	return aleatoire_question[0], stock_id_question, theme_choisi
 		id_question = a[0][0]
 		libelle = a[0][1]
@@ -89,10 +56,11 @@ def main():
 
 		b = input(" ++++++  Votre réponse :")
 
-		statut = traitement_reponse(b, id_question, dico_joueurs[idj_actuel], theme, difficulte)
+		statut, joueur = traitement_reponse(b, id_question, dico_joueurs[idj_actuel], theme, '3')
 
 	idj_actuel = j_suivant(dico_joueurs, idj_actuel)
 	print(" ++++++++++++++++++++++")
+	print("camemberts après : " + str((dico_joueurs[idj_actuel]).camembert))
 	print(" ++++++  tour en cours :", dico_joueurs[idj_actuel])
 
 main()
