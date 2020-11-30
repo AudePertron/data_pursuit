@@ -1,29 +1,34 @@
-def question_aleatoire(lister_themes,lister_questions_theme):
+def question_aleatoire(stock):
+	data = Bdd()
+	aleatoire_question = []
+	stock_id_question = stock
+
+    #choix aléatoire et affichage des deux thèmes,puis l'utilisateur doit faire un choix
+	themes = data.lister_themes()
+       themes_au_choix = random.sample(themes,2)
+	print(themes_au_choix)
+	theme_choisi = input(" ++++++  Veuillez choisir un theme: ")
+   
+    #stockage de tous les id, des libellés et des difficultés des questions du theme sélectionné par le joueur 
        
-       liste_question = []
-       question_aleatoire = []
-       stock_id_questionid_question = []
-       '''
-       liste_question_finale = {}
-       '''
-       #choix aléatoire et affichage des deux thèmes,puis l'utilisateur doit faire un choix
-       theme = sample(lister_themes,2)
-       print(theme)
-       theme = input("Veuillez choisir un theme: ")
-       #stock des id des questions
-       liste_question = id_question in lister_questions_theme(theme)
-       #choix aléatoire d'un id_question 
-       question_aleatoire = sample(liste_question,1) 
- '''   
-        #creation d'un dictionnaire 
-       for key, value in  liste_question:    
-        liste_question_finale.setdefault(key,[]).append(value)
-'''
-       #recupération des id des questions déjà posées du theme choisis
-       stock_id_question.append(id_question in question_aleatoire)
-       #suppression des id_question dejà sélectionnées dans liste_question
-       if id_question in (stock_id_question) and id_question in (liste_question):
-           del liste_question[id_question]
-       #rajout de toutes les questions supprimées si liste_question est vide 
+       liste_question = data.lister_questions_theme(theme_choisi)
+
+    #choix aléatoire de la question
+	
+       aleatoire_question = random.sample(liste_question,1)
+	while aleatoire_question[0][0] in stock_id_question : # [(5, 'ksjfle', 3), (6, 'isjape', 3)]
+		aleatoire_question = random.sample(liste_question,1)
+
+    #recupération des id des questions du theme choisis précédement par l'utilisateur
+   
+	id_question = aleatoire_question[0][0]
+	stock_id_question.append(id_question)
+       
+    #rajout de toutes les questions supprimées si liste_question est vide 
+	
        if len(liste_question) == 0:
-          liste_question = liste_question + stock_id_question
+              stock_id_question = []
+      
+    # récupération de la question aléatoire , des id_question, et du thème choisi
+	
+       return aleatoire_question[0], stock_id_question, theme_choisi
