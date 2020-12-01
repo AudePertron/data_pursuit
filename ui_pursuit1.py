@@ -13,10 +13,7 @@ import random
 import mysql.connector
 import sys
 import time
-from traitement_reponse import traitement_reponse
-from traitement_reponse import fonction_camembert	#peut-être pas nécéssaire
-from traitement_reponse import question_finale	#idem
-from fonction_question_aléatoire import question_aleatoire
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1007,23 +1004,29 @@ class Ui_MainWindow(object):
         id_en_jeu = 1
 
         # --------------debut du jeu-----------------#
-        self.tour = 1
-        i = 0
 
         param_question = self.poser_question(dico_joueurs, liste_labels, stockage, id_en_jeu)
-        self.id_question = param_question[0][0]
-        self.theme = param_question[2]
-        self.difficulte = param_question[0][2]
-        self.stockage = param_question[1]
-        reponse_donnee = self.traiter_reponse() # peut-être pas bon
-        reponse_origine= self.data.obtenir_reponse_id(self.id_question)
-        i = self.tour
+        id_question = param_question[0][0]
 
-            #--------------gameplay--------------#
+        reponse_donnee = self.traiter_reponse() # peut-être pas bon
+        reponse_origine= self.data.obtenir_reponse_id(id_question)
+
+
+
+
+
+
+        #--------------gameplay--------------#
+
+
+
     #----------------------------------------------------------------------#
     
     def recup_noms(self):
         return ["Lewis", "Fernando", "Romain"]
+
+    def suite_du_tour(self):
+    	return
 
     def initjoueurs(self, arg):
         self.dico_joueurs = {}
@@ -1056,18 +1059,17 @@ class Ui_MainWindow(object):
         return self.dico_joueurs, self.liste_labels
 
 
-    def j_suivant(self, idj_actuel):
+    def j_suivant(self, dico_joueurs, idj_actuel):
         for label in self.liste_labels :
-            #label.setEnable(False)
-            print('test')
-        if idj_actuel == len(self.dico_joueurs):            
-            idj_actuel = 1
+            self.label.setEnable(False)
+        if self.idj_actuel == len(self.dico_joueurs):
+            
+            self.idj_actuel = 1
         else :
-            idj_actuel +=1
-        label_en_jeu = self.liste_labels[(idj_actuel - 1)]
-        #label_en_jeu.setEnable(True)
-        return idj_actuel
-
+            self.idj_actuel +=1
+        label_en_jeu = liste_labels[(idj_actuel - 1)]
+        self.label_en_jeu.setEnabel(True)
+        return self.idj_actuel
 
     def poser_question(self, dico_joueurs, liste_labels, stockage, id_en_jeu) :
         # initialisation
@@ -1107,21 +1109,8 @@ class Ui_MainWindow(object):
 
     def traiter_reponse(self):
         if self.champ.text():
-            statut, self.dico_joueurs[self.id_en_jeu] = traitement_reponse(self.champ.text(), self.id_question, self.dico_joueurs[self.id_en_jeu], self.theme, self.difficulte, self.stockage )
-            if statut == False:
-                self.lib_reponse.setText("mauvaise réponse, dommage ! ")
-            else:
-                self.lib_reponse.setText("bonne réponse ! ")
-        return self.dico_joueurs[self.id_en_jeu]
-
-    def suite_du_tour(self):
-        if self.dico_joueurs[self.id_en_jeu].tour == False:
-            print("dico joueurs " + str(self.dico_joueurs))
-            #print("id en jeu " + str(self.id_en_jeu))
-            nv_j = self.j_suivant(self.id_en_jeu)
-        self.tour = self.tour + 1 #rajoute un tour
-        return self.tour
-
+        	self.lib_reponse.setText("turlututu")
+        return self.champ.text()
 
     def question_aleatoire(self, stockage):
         self.data = Bdd()
@@ -1147,7 +1136,7 @@ class Ui_MainWindow(object):
 
 
 
-      
+                
 
 if __name__ == "__main__":
     import sys
