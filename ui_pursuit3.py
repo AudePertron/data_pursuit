@@ -3,7 +3,10 @@
 # -*- coding: utf-8 -*-
 
 # fenetre principale de l'interface graphique
+
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from joueur import Joueur
 from connect_bdd import Bdd
 # from traitement_reponse import *
@@ -11,11 +14,10 @@ import random
 import mysql.connector
 import sys
 import time
-from fonction_question_aléatoire import question_aleatoire
 from traitement_reponse import traitement_reponse
 from traitement_reponse import fonction_camembert	#peut-être pas nécéssaire
 from traitement_reponse import question_finale	#idem
-
+from fonction_question_aléatoire import question_aleatoire
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1018,6 +1020,7 @@ class Ui_MainWindow(object):
         self.id_question = param_question[0][0]
         self.theme = param_question[2]
         self.difficulte = param_question[0][2]
+        
         self.stockage = param_question[1]
         reponse_donnee = self.traiter_reponse() 
         reponse_origine= self.data.obtenir_reponse_id(self.id_question)
@@ -1059,19 +1062,19 @@ class Ui_MainWindow(object):
 
 
     def j_suivant(self):
-        idj_actuel = self.id_en_jeu
-        if idj_actuel == len(self.dico_joueurs):            
-            idj_actuel = 1
+        if self.id_en_jeu == (len(self.dico_joueurs)):            
+            self.id_en_jeu = 1
         else :
-            idj_actuel +=1
-        self.id_en_jeu = idj_actuel
-        return idj_actuel
+            self.id_en_jeu +=1
+        
+        return
 
 
     def poser_question(self, dico_joueurs, liste_labels, stockage, id_en_jeu) :
         # initialisation
 
         self.stockage = stockage
+        
         self.dico_joueurs = dico_joueurs
         self.liste_labels = liste_labels
 
@@ -1080,11 +1083,11 @@ class Ui_MainWindow(object):
         a = self.question_aleatoire(self.stockage) #    return aleatoire_question[0], stock_id_question, theme_choisi
         id_question = a[0][0]
         libelle = a[0][1]
-        difficulte = a[0][2]
+        self.difficulte = a[0][2]
         self.stockage = a[1]
         theme = a[2]
         # donner difficulté 
-        self.lib_diffic.setText("Question niveau " + str(difficulte))
+        self.lib_diffic.setText("Question niveau " + str(self.difficulte))
         self.label_35.setText("Tour: " + str(self.dico_joueurs[self.id_en_jeu]))
         self.lib_question.setText(libelle)
 
@@ -1092,11 +1095,16 @@ class Ui_MainWindow(object):
 
     def traiter_reponse(self):
         if self.champ.text():
+
             reponse = self.champ.text()
             self.champ.clear()
-            statut, self.dico_joueurs[self.id_en_jeu] = traitement_reponse(reponse, self.id_question, self.dico_joueurs[self.id_en_jeu], self.theme, self.difficulte, self.stockage )
+            statut, self.dico_joueurs[self.id_en_jeu]= traitement_reponse(reponse, self.id_question, self.dico_joueurs[self.id_en_jeu], self.theme, 3, self.stockage )
+            ###########################################remettre la difficulte !!!! ###########################################################""
+            reponse_origine= Bdd.obtenir_reponse_id(self.id_question) #query qui récupère la bonne réponse 
+            reponse_origine = reponse_origine[0][0] 
+
             if statut == False:
-                self.lib_reponse.setText("mauvaise réponse, dommage ! ")
+                self.lib_reponse.setText("mauvaise réponse, dommage ! " + str(reponse_origine))
                 self.j_suivant()
             else:
                 self.lib_reponse.setText("bonne réponse ! ")
@@ -1105,11 +1113,7 @@ class Ui_MainWindow(object):
 
 
     def suite_du_tour(self):
-        if self.dico_joueurs[self.id_en_jeu].tour == False:
-            print("dico joueurs " + str(self.dico_joueurs[self.id_en_jeu]))
 
-            #print("id en jeu " + str(self.id_en_jeu))
-            self.id_en_jeu +=1
         self.lib_reponse.clear()
         self.tour = self.tour + 1 #rajoute un tour
         self.jeu()
@@ -1124,7 +1128,8 @@ class Ui_MainWindow(object):
         themes = self.data.lister_themes()
 
         themes_au_choix = random.sample(themes,2)
-        theme_choisi = 3 #FORCé - a modifier
+        
+        theme_choisi = themes_au_choix[0][0]
 
         liste_question = self.data.lister_questions_theme(theme_choisi)
 
