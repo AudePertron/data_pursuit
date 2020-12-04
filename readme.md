@@ -6,11 +6,11 @@ Le résultat final sera époustouflant (ou presque) !
 ## Semaine 2
 ### Interface d'accueil
 
-![accueil](images/accueil.PNG)
+![accueil](images/interface_accueil.PNG)
 
 ### Interface principale
 
-![main_UI](images/main_UI.PNG)
+![main_UI](images/mainUI.PNG)
 
 ### Tirage de question aléatoire
 
