@@ -8,9 +8,7 @@ def traitement_reponse(reponse_joueur, id_question, joueur, theme, difficulte, s
     reponse_origine= Bdd.obtenir_reponse_id(id_question) #query qui récupère la bonne réponse 
     reponse_origine = reponse_origine[0][0] 
     if reponse_joueur.lower() == reponse_origine.lower(): #si bonne réponse
-        #changer par une interface
-        print("Réponse correcte")
-        print(reponse_origine)
+        
         statut = True       #joueur.tour --> continue à jouer
         if joueur.final == 1:
             print(" Félicitations ! Vous avez gagné!")      #### Changer par l'écran de victoire

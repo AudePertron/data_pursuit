@@ -16,7 +16,7 @@ import time
 from traitement_reponse import traitement_reponse
 from traitement_reponse import fonction_camembert	#peut-être pas nécéssaire
 from traitement_reponse import question_finale	#idem
-from fonction_question_aléatoire import question_aleatoire
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -522,7 +522,7 @@ class Ui_MainWindow(object):
         self.groupBox_3.setPalette(palette)
         self.groupBox_3.setObjectName("groupBox_3")
         self.nom_3 = QtWidgets.QLabel(self.groupBox_3)
-        self.nom_3.setEnabled(False)
+        self.nom_3.setEnabled(True)
         self.nom_3.setGeometry(QtCore.QRect(16, 20, 111, 20))
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -664,7 +664,7 @@ class Ui_MainWindow(object):
         self.groupBox_2.setPalette(palette)
         self.groupBox_2.setObjectName("groupBox_2")
         self.nom_2 = QtWidgets.QLabel(self.groupBox_2)
-        self.nom_2.setEnabled(False)
+        self.nom_2.setEnabled(True)
         self.nom_2.setGeometry(QtCore.QRect(16, 20, 111, 20))
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -807,7 +807,7 @@ class Ui_MainWindow(object):
         self.groupBox_4.setPalette(palette)
         self.groupBox_4.setObjectName("groupBox_4")
         self.nom_4 = QtWidgets.QLabel(self.groupBox_4)
-        self.nom_4.setEnabled(False)
+        self.nom_4.setEnabled(True)
         self.nom_4.setGeometry(QtCore.QRect(16, 20, 111, 20))
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -989,7 +989,7 @@ class Ui_MainWindow(object):
 
     #------------------------CODER ICI ----------------------------------------------# 
         self.bok.clicked.connect(self.traiter_reponse) # action lorsque on appuie sur le bouton ok (appeler fonction traiter_reponse)
-        self.bsuite.clicked.connect(self.suite_du_tour) # action lorsque l'on appuie sur le bouton suivant (la fonction suite_du_tour n'existe pas pour l'instant)
+        self.bsuite.clicked.connect(self.suite_du_tour) # action lorsque l'on appuie sur le bouton suivant (la fonction suite_du_tour)
         # --------------init-----------------#
         self.groupBox_2.hide()
         self.groupBox_3.hide()
@@ -1000,28 +1000,31 @@ class Ui_MainWindow(object):
         liste_joueurs = self.recup_noms()
 
         param_init = self.initjoueurs(liste_joueurs)
-        dico_joueurs = param_init[0]
-        liste_labels = param_init[1]
+        self.dico_joueurs = param_init[0]
+        self.liste_labels = param_init[1]
 
-        stockage = []
-        id_en_jeu = 1
+        self.stockage = []
+        self.id_en_jeu = 1
 
         # --------------debut du jeu-----------------#
         self.tour = 1
-        i = 0
+        self.jeu()
+        
 
-        param_question = self.poser_question(dico_joueurs, liste_labels, stockage, id_en_jeu)
+            #--------------gameplay--------------#
+    #----------------------------------------------------------------------#
+    def jeu(self):
+
+        param_question = self.poser_question(self.dico_joueurs, self.liste_labels, self.stockage, self.id_en_jeu)
         self.id_question = param_question[0][0]
         self.theme = param_question[2]
         self.difficulte = param_question[0][2]
         self.stockage = param_question[1]
-        reponse_donnee = self.traiter_reponse() # peut-être pas bon
+        reponse_donnee = self.traiter_reponse() 
         reponse_origine= self.data.obtenir_reponse_id(self.id_question)
-        i = self.tour
 
-            #--------------gameplay--------------#
-    #----------------------------------------------------------------------#
-    
+        return
+
     def recup_noms(self):
         return ["Lewis", "Fernando", "Romain"]
 
@@ -1056,29 +1059,20 @@ class Ui_MainWindow(object):
         return self.dico_joueurs, self.liste_labels
 
 
-    def j_suivant(self, idj_actuel):
-        for label in self.liste_labels :
-            #label.setEnable(False)
-            print('test')
+    def j_suivant(self):
+        idj_actuel = self.id_en_jeu
         if idj_actuel == len(self.dico_joueurs):            
             idj_actuel = 1
         else :
             idj_actuel +=1
-        label_en_jeu = self.liste_labels[(idj_actuel - 1)]
-        #label_en_jeu.setEnable(True)
+        self.id_en_jeu = idj_actuel
         return idj_actuel
 
 
     def poser_question(self, dico_joueurs, liste_labels, stockage, id_en_jeu) :
         # initialisation
-        # self.liste_joueurs = liste
-        self.lib_diffic.setText("uhuhuhuhuhuglud nniveau ff")
-    #     param_init = self.initjoueurs(self.liste_joueurs)
-    #     self.dico_joueurs = param_init[0]
-    #     self.liste_labels = param_init[1]
-    #     idj_actuel = 1
+
         self.stockage = stockage
-        self.id_en_jeu = id_en_jeu
         self.dico_joueurs = dico_joueurs
         self.liste_labels = liste_labels
 
@@ -1092,58 +1086,107 @@ class Ui_MainWindow(object):
         theme = a[2]
         # donner difficulté 
         self.lib_diffic.setText("Question niveau " + str(difficulte))
+        self.label_35.setText("Tour: " + str(self.dico_joueurs[self.id_en_jeu]))
         self.lib_question.setText(libelle)
 
-    #         # attendre qu'on appuie sur ok.
-    #         while self.bok.isChecked() == False:
-    #             time.sleep(1)
-
-        # statut = traitement_reponse(reponse_donnee, id_question, self.dico_joueurs[self.id_en_jeu], theme, difficulte)
-
-    #     idj_actuel = j_suivant(dico_joueurs, idj_actuel)
-    #     # print(" ++++++++++++++++++++++")
-    #     # print(" ++++++  tour en cours :", dico_joueurs[idj_actuel])
         return a
 
     def traiter_reponse(self):
         if self.champ.text():
-            statut, self.dico_joueurs[self.id_en_jeu] = traitement_reponse(self.champ.text(), self.id_question, self.dico_joueurs[self.id_en_jeu], self.theme, self.difficulte, self.stockage )
+            reponse = self.champ.text()
+            self.champ.clear()
+            statut, self.dico_joueurs[self.id_en_jeu] = traitement_reponse(reponse, self.id_question, self.dico_joueurs[self.id_en_jeu], self.theme, self.difficulte, self.stockage )
             if statut == False:
                 self.lib_reponse.setText("mauvaise réponse, dommage ! ")
+                self.j_suivant()
             else:
                 self.lib_reponse.setText("bonne réponse ! ")
+        
         return self.dico_joueurs[self.id_en_jeu]
+
 
     def suite_du_tour(self):
         if self.dico_joueurs[self.id_en_jeu].tour == False:
-            print("dico joueurs " + str(self.dico_joueurs))
+            print("dico joueurs " + str(self.dico_joueurs[self.id_en_jeu]))
+
             #print("id en jeu " + str(self.id_en_jeu))
-            nv_j = self.j_suivant(self.id_en_jeu)
+            self.id_en_jeu +=1
+        self.lib_reponse.clear()
         self.tour = self.tour + 1 #rajoute un tour
+        self.jeu()
         return self.tour
-
-
-    def question_aleatoire(self, stockage):
-        self.data = Bdd()
-
+##################"fonction luigi"
+    def question_aleatoire(stock, theme, difficulte):
+        data = Bdd()
         aleatoire_question = []
-        self.stockage = stockage
-        themes = self.data.lister_themes()
+        stock_id_question = stock
+        #choix aléatoire et affichage des deux thèmes,puis l'utilisateur doit faire un choix
 
-        themes_au_choix = random.sample(themes,2)
-        theme_choisi = 3 #FORCé - a modifier
+        #boucle qui permet de décider manuellement ou automatiquement du thème
+        if theme == 0:
+            themes = Bdd.lister_themes()
+            themes_au_choix = random.sample(themes,2)
+            print(themes_au_choix)
+            theme_choisi = input(" ++++++  Veuillez choisir un theme: ")
+        else:
+            theme_choisi = theme
 
-        liste_question = self.data.lister_questions_theme(theme_choisi)
+        #boucle qui permet de sélectionner manuellement ou automatiquement la difficulté
+
+        if difficulte ==0:
+            liste_question = data.lister_questions_theme(theme_choisi[0])
+        else:
+            print("theme choisi 0.0 " + str(theme_choisi[0][0]))
+            liste_question = data.lister_questions_dures(str(theme_choisi[0][0]), difficulte)
+
+
+        #stockage de tous les id, des libellés et des difficultés des questions du theme sélectionné par le joueur 
+
+        #choix aléatoire de la question
 
         aleatoire_question = random.sample(liste_question,1)
-        while aleatoire_question[0][0] in self.stockage : # comparer avec le stock pour voir si la question a 
-            aleatoire_question = random.sample(liste_question,1) # déjà été posée
-        id_question = aleatoire_question[0][0]
-        self.stockage.append(id_question)
-        if len(liste_question) == 0: #rajout de toutes les questions supprimées si liste_question est vide !!!!! A REVOIR
-            self.stock_id_question = []
+        while aleatoire_question[0][0] in stock_id_question : # [(5, 'ksjfle', 3), (6, 'isjape', 3)]
+            aleatoire_question = random.sample(liste_question,1)
 
-        return aleatoire_question[0], self.stockage, theme_choisi
+        #recupération des id des questions du theme choisis précédement par l'utilisateur
+    
+        id_question = aleatoire_question[0][0]
+        stock_id_question.append(id_question)
+        
+        #rajout de toutes les questions supprimées si liste_question est vide 
+
+        if len(liste_question) == 0:
+                stock_id_question = []
+        
+        # récupération de la question aléatoire , des id_question, et du thème choisi
+
+        return aleatoire_question[0], stock_id_question, theme_choisi
+
+
+
+
+
+    # def question_aleatoire(self, stockage):
+    #     self.data = Bdd()
+    #     print("ludivine")
+    #     aleatoire_question = []
+    #     self.stockage = stockage
+    #     themes = self.data.lister_themes()
+
+    #     themes_au_choix = random.sample(themes,2)
+    #     theme_choisi = 3 #FORCé - a modifier
+
+    #     liste_question = self.data.lister_questions_theme(theme_choisi)
+
+    #     aleatoire_question = random.sample(liste_question,1)
+    #     while aleatoire_question[0][0] in self.stockage : # comparer avec le stock pour voir si la question a 
+    #         aleatoire_question = random.sample(liste_question,1) # déjà été posée
+    #     id_question = aleatoire_question[0][0]
+    #     self.stockage.append(id_question)
+    #     if len(liste_question) == 0: #rajout de toutes les questions supprimées si liste_question est vide !!!!! A REVOIR
+    #         self.stock_id_question = []
+
+    #     return aleatoire_question[0], self.stockage, theme_choisi
 
 
 
