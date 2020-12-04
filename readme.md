@@ -1,33 +1,20 @@
 # TRIVIAL DATA
 
 Ce projet Trivial Data a été créé par Aude, Luigi, Céline et Ludivine. 
-Le résultat final sera époustouflant (ou presque) !
+Le résultat final sera époustouflant!
 
-## Semaine 2
-### Interface d'accueil
-
-![accueil](images/Page acceuil.PNG)
-
-### Interface principale
-
-![main_UI](images/mainUI.PNG)
-
-### Tirage de question aléatoire
-
-![alea](images/alea.PNG)
-
-
-
-## Semaine 1
-### Projet d'interface graphique 30 novembre
-
-![UI](images/etude_interface.png)
-
+### Modèle logique des données
+![mld](images/mld.png)
 
 ### Burndown du lundi 30 Novembre
 
 ![burndown](images/burndown.jpg)
 
-### Modèle logique des données
+### Projet d'interface graphique 30 novembre
 
-![mld](images/mld.png)
+![UI](images/etude_interface.png)
+
+### Partie graphique choix aléatoire theme
+
+![UI](images/tkinter_theme_aleatoire.png)
+![UI](images/resultat_tkinter_theme_aleatoire.png)
