@@ -6,7 +6,7 @@ Le résultat final sera époustouflant (ou presque) !
 ## Semaine 2
 ### Interface d'accueil
 
-![accueil](images/interface_accueil.PNG)
+![accueil](images/Page acceuil.PNG)
 
 ### Interface principale
 
