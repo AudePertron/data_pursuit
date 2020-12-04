@@ -16,5 +16,5 @@ Le résultat final sera époustouflant!
 
 ### Partie graphique choix aléatoire theme
 
-![UI](images/tkinter_theme_aleatoire.png)
-![UI](images/resultat_tkinter_theme_aleatoire.png)
+(images/tkinter_theme_aleatoire.png)
+(images/resultat_tkinter_theme_aleatoire.png)
